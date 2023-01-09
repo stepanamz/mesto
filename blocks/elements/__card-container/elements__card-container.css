@@ -1,0 +1,9 @@
+.elements__card-container{
+  max-width: 246px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  box-sizing: border-box;
+}
