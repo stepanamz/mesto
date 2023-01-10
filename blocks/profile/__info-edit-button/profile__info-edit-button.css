@@ -1,6 +1,6 @@
 .profile__info-edit-button{
   background-color: black;
-  background-image: url(../../../image/edit-botton.svg);
+  background-image: url(../../../images/edit-botton.svg);
   border: 1px solid white;
   max-width: 24px;
   width: 100%;
@@ -20,5 +20,6 @@
   .profile__info-edit-button {
     max-width: 18px;
     min-height: 18px;
+    align-items: flex-start;
   }
 }

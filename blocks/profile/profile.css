@@ -11,8 +11,18 @@
 
 @media screen and (min-width: 744px) and (max-width: 1279px) {
   .profile {
-    padding-top: 38.25px;
+    padding-top: 42px;
     padding-left: 27px;
     padding-bottom: 36px;
+    gap: 26px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 743px) {
+  .profile {
+    padding-top: 42px;
+    padding-left: 0;
+    padding-bottom: 36px;
+    gap: 26px;
   }
 }
