@@ -1,0 +1,29 @@
+.popup-profile__close{
+  border: none;
+  background: none;
+  background-image: url(../../../image/Close-Icon.svg);
+  max-width: 32px;
+  width: 100%;
+  min-height: 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+  position: absolute;
+  right: -36px;
+  top: -36px;
+  transition: 0.2s;
+}
+
+.popup-profile__close:hover{
+  opacity: 0.6;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1279px) {
+  .popup-profile__close {
+    right: 0;
+    max-width: 20px;
+    min-height: 20px;
+  }
+}
+

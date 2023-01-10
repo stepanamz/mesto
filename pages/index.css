@@ -22,3 +22,12 @@
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copy/footer__copy.css);
+
+@import url(../blocks/popup-profile/popup-profile.css);
+@import url(../blocks/popup-profile/__close/popup-profile__close.css);
+@import url(../blocks/popup-profile/__container/popup-profile__container.css);
+@import url(../blocks/popup-profile/__title/popup-profile__title.css);
+@import url(../blocks/popup-profile/popup-profile_opened.css);
+@import url(../blocks/popup-profile/__form/popup-profile__form.css);
+@import url(../blocks/popup-profile/__form-button/popup-profile__form-button.css);
+@import url(../blocks/popup-profile/__form-name/popup-profile__form-name.css);

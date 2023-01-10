@@ -1,0 +1,17 @@
+.popup-profile__container{
+  max-width: 358px;
+  width: 100%;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 34px 36px 37px 36px;
+  position: relative;
+  border-radius: 10px;
+
+}
+
+@media screen and (min-width: 320px) and (max-width: 1279px) {
+  .popup-profile__container {
+    max-width: 238px;
+    padding: 25px 22px;
+  }
+}

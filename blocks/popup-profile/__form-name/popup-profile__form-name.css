@@ -1,0 +1,15 @@
+.popup-profile__form-name{
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #0000002a;
+  color: black;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 0;
+  padding-bottom: 13px;
+  box-sizing: border-box;
+  margin: 0;
+}

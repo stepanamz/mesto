@@ -9,4 +9,16 @@
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.profile__info-edit-button:hover{
+  opacity: 0.6;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1279px) {
+  .profile__info-edit-button {
+    max-width: 18px;
+    min-height: 18px;
+  }
 }
