@@ -1,4 +1,4 @@
-.popup-profile__form-button{
+.popup__form-button{
   width: 100%;
   margin-top: 18px;
   background: #000000;
@@ -16,6 +16,6 @@
   border: none;
 }
 
-.popup-profile__form-button:hover{
+.popup__form-button:hover{
   opacity: 0.8;
 }

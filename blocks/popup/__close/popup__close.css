@@ -1,4 +1,4 @@
-.popup-profile__close{
+.popup__close{
   border: none;
   background: none;
   background-image: url(../../../images/Close-Icon.svg);
@@ -15,12 +15,12 @@
   transition: 0.2s;
 }
 
-.popup-profile__close:hover{
+.popup__close:hover{
   opacity: 0.6;
 }
 
 @media screen and (min-width: 320px) and (max-width: 1279px) {
-  .popup-profile__close {
+  .popup__close {
     right: 0;
     max-width: 20px;
     min-height: 20px;
