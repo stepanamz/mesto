@@ -8,12 +8,11 @@ let jobInput = formElement.querySelector('input[name="subname"]')
 
 let profileName = document.querySelector('.profile__info-name')
 let profileJob = document.querySelector('.profile__info-subname')
-console.log(popupProfile)
+
 editProfile.addEventListener('click',function(){
 
   popupProfile.classList.add('popup_opened')
-  console.log('тык')
-  console.log(popupProfile)
+
   nameInput.value = profileName.textContent
   jobInput.value = profileJob.textContent
 })
