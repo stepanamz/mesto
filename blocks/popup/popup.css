@@ -5,9 +5,12 @@ height: 100%;
 background-color: rgba(0, 0, 0, 0.5);
 top: 0;
 left: 0;
-display: none;
+display: flex;
+visibility: hidden;
+opacity: 0;
 flex-direction: column;
 justify-content: center;
+transition: 0.3s;
 }
 
 
