@@ -1,5 +1,5 @@
-const editProfile = document.querySelector('.profile__info-edit-button')
-const popupProfile = document.querySelector('.popup-profile')
+const buttonEditProfile = document.querySelector('.profile__info-edit-button')
+const popupProfile = document.querySelector('.popup_profile')
 const closeProfile = popupProfile.querySelector('.popup__close')
 // Находим форму в DOM
 const formElement = popupProfile.querySelector('.popup__form')
@@ -9,7 +9,7 @@ const jobInput = formElement.querySelector('input[name="subname"]')
 const profileName = document.querySelector('.profile__info-name')
 const profileJob = document.querySelector('.profile__info-subname')
 
-const cardTemplate = document.querySelector('.elements__template-card').content.querySelector('.elements__card') // Шаблон карточки
+const cardTemplate = document.querySelector('.template-card').content.querySelector('.element') // Шаблон карточки
 const cardElements = document.querySelector('.elements') // секция куда будем вставлять карточки
 
 const popupMesto = document.querySelector('.popup-mesto')
@@ -49,16 +49,23 @@ const initialCards = [
   }
 ];
 
-editProfile.addEventListener('click',function(){
+function popupOpen(popup) {  // вкл - попапа
+  popup.classList.add('popup_opened')
+}
+function popupClose(popup) {  // вкл - попапа
+  popup.classList.remove('popup_opened')
+}
 
-  popupProfile.classList.add('popup_opened')
+buttonEditProfile.addEventListener('click',function(){
+
+  popupOpen(popupProfile)
 
   nameInput.value = profileName.textContent
   jobInput.value = profileJob.textContent
 })
 
 closeProfile.addEventListener('click',function(){
-  popupProfile.classList.remove('popup_opened')
+  popupClose(popupProfile)
 })
 
 // Обработчик «отправки» формы, хотя пока
@@ -71,7 +78,7 @@ function handleFormSubmit (evt) {
 
   profileName.textContent = nameInput.value
   profileJob.textContent = jobInput.value
-  popupProfile.classList.remove('popup_opened')
+  popupClose(popupProfile)
 }
 
 // Прикрепляем обработчик к форме:
@@ -83,12 +90,12 @@ formElement.addEventListener('submit', handleFormSubmit);
 
 buttonMestoAdd.addEventListener('click',function(){
 
-  popupMesto.classList.add('popup_opened')  // Открываем попап
+  popupOpen(popupMesto)  // Открываем попап
 })
 
 popupMestoClose.addEventListener('click', function() {
 
-  popupMesto.classList.remove('popup_opened') // закрываем попап
+  popupClose(popupMesto) // закрываем попап
 })
 
 formElementMesto.addEventListener('submit', function(event){  // добавление корточек из формы
@@ -101,7 +108,7 @@ formElementMesto.addEventListener('submit', function(event){  // добавле�
 
 
   cardElements.prepend(card) // добавляем карточку в начало
-  popupMesto.classList.remove('popup_opened') // закрываем попап
+  popupClose(popupMesto) // закрываем попап
 
   nameImageInput.value = ''
   linkImageInput.value = ''
@@ -122,32 +129,36 @@ renderCards()
 
 function createdCard(item) {  // создание карточек
 
-  const card = cardTemplate.cloneNode(true)  // копируем содержимое шаблона карточки
+  const card = cardTemplate.cloneNode(true)  // копируем содержимое шаблона карточки (element)
+  const elementCardImage = card.querySelector('.element__card-image')
+  const elementCardLike = card.querySelector('.element__card-like')
 
-  card.querySelector('.elements__card-image').src = item.link  // ищем src и присваеваем ему объект с link
-  card.querySelector('.elements__card-image').alt = item.name  // ищем alt и присваеваем ему объект с name
-  card.querySelector('.elements__card-title').textContent = item.name // ищем title карточки и присваеваем ему объект с name
+  elementCardImage.src = item.link  // ищем src и присваеваем ему объект с link
+  elementCardImage.alt = item.name  // ищем alt и присваеваем ему объект с name
+  card.querySelector('.element__card-title').textContent = item.name // ищем title карточки и присваеваем ему объект с name
 
-  card.querySelector('.elements__card-like').addEventListener('click',function(){
-    card.querySelector('.elements__card-like').classList.toggle('elements__card-like_active') // лайки
+  elementCardLike.addEventListener('click',function(){
+    elementCardLike.classList.toggle('element__card-like_active') // лайки
   })
 
-  card.querySelector('.elements__trash').addEventListener('click',function(){ // удаление карточки
+  card.querySelector('.element__trash').addEventListener('click',function(){ // удаление карточки
     card.remove()
   })
 
-  card.querySelector('.elements__card-image').addEventListener('click',function(){ // открытие попап картинки
-    popupImage.classList.add('popup_opened')
-    popupImage.querySelector('.popup-image__img').src = item.link
-    popupImage.querySelector('.popup-image__img').alt = item.name
+  elementCardImage.addEventListener('click',function(){ // открытие попап картинки
+    const popupImageImg =  popupImage.querySelector('.popup-image__img')
+    popupOpen(popupImage)
+    popupImageImg.src = item.link
+    popupImageImg.alt = item.name
     popupImage.querySelector('.popup-image__title').textContent = item.name
 
-    popupImage.querySelector('.popup__close').addEventListener('click', function(){
-      popupImage.classList.remove('popup_opened')
-    })
+
   })
 
+  popupImage.querySelector('.popup__close').addEventListener('click', function(){ // закрываем попап картинки
+    popupClose(popupImage)
 
+  })
 
   return card // возвращает карточку
 }

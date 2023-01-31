@@ -1,4 +1,4 @@
-.elements__trash{
+.element__trash{
   background: none;
   border: none;
   background-image: url(../../../images/Trash.svg);
@@ -14,6 +14,6 @@
   transition: 0.3s;
 }
 
-.elements__trash:hover{
+.element__trash:hover{
   opacity: 0.6;
 }

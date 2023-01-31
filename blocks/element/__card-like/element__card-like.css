@@ -1,4 +1,4 @@
-.elements__card-like{
+.element__card-like{
   border: none;
   background-color: #FFFFFF;
   cursor: pointer;
@@ -11,6 +11,6 @@
   transition: 0.2s;
 }
 
-.elements__card-like:hover{
+.element__card-like:hover{
   opacity: 0.5;
 }

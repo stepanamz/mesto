@@ -14,13 +14,14 @@
 @import url(../blocks/profile/__info-edit-button/profile__info-edit-button.css);
 
 @import url(../blocks/elements/elements.css);
-@import url(../blocks/elements/__card/elements__card.css);
-@import url(../blocks/elements/__trash/elements__trash.css);
-@import url(../blocks/elements/__card-title/elements__card-title.css);
-@import url(../blocks/elements/__card-like/elements__card-like.css);
-@import url(../blocks/elements/__card-image/elements__card-image.css);
-@import url(../blocks/elements/__card-container/elements__card-container.css);
-@import url(../blocks/elements/__card-like/_active/elements__card-like_active.css);
+
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__trash/element__trash.css);
+@import url(../blocks/element/__card-title/element__card-title.css);
+@import url(../blocks/element/__card-like/element__card-like.css);
+@import url(../blocks/element/__card-image/element__card-image.css);
+@import url(../blocks/element/__card-container/element__card-container.css);
+@import url(../blocks/element/__card-like/_active/element__card-like_active.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copy/footer__copy.css);
