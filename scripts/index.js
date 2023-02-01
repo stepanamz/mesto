@@ -1,6 +1,6 @@
 const buttonEditProfile = document.querySelector('.profile__info-edit-button')
-const popupProfile = document.querySelector('.popup_profile')
-const closeProfile = popupProfile.querySelector('.popup__close')
+const popupProfile = document.querySelector('.popup_type_profile')
+const buttonClosePopupProfile = popupProfile.querySelector('.popup__close')
 // Находим форму в DOM
 const formElement = popupProfile.querySelector('.popup__form')
 const nameInput = formElement.querySelector('input[name="name"]')
@@ -12,7 +12,7 @@ const profileJob = document.querySelector('.profile__info-subname')
 const cardTemplate = document.querySelector('.template-card').content.querySelector('.element') // Шаблон карточки
 const cardElements = document.querySelector('.elements') // секция куда будем вставлять карточки
 
-const popupMesto = document.querySelector('.popup-mesto')
+const popupMesto = document.querySelector('.popup_type_mesto')
 const nameImageInput = popupMesto.querySelector('input[name="nameImage"]')
 const linkImageInput = popupMesto.querySelector('input[name="linkImage"]')
 const popupMestoClose = popupMesto.querySelector('.popup__close')
@@ -20,7 +20,7 @@ const formElementMesto = popupMesto.querySelector('.popup__form')
 
 const buttonMestoAdd = document.querySelector('.profile__button')
 
-const popupImage = document.querySelector('.popup-image')
+const popupImage = document.querySelector('.popup_type_image')
 
 const initialCards = [
   {
@@ -49,23 +49,23 @@ const initialCards = [
   }
 ];
 
-function popupOpen(popup) {  // вкл - попапа
+function openPopup(popup) {  // вкл - попапа
   popup.classList.add('popup_opened')
 }
-function popupClose(popup) {  // вкл - попапа
+function closePopup(popup) {  // вкл - попапа
   popup.classList.remove('popup_opened')
 }
 
 buttonEditProfile.addEventListener('click',function(){
 
-  popupOpen(popupProfile)
+  openPopup(popupProfile)
 
   nameInput.value = profileName.textContent
   jobInput.value = profileJob.textContent
 })
 
-closeProfile.addEventListener('click',function(){
-  popupClose(popupProfile)
+buttonClosePopupProfile.addEventListener('click',function(){
+  closePopup(popupProfile)
 })
 
 // Обработчик «отправки» формы, хотя пока
@@ -78,7 +78,7 @@ function handleFormSubmit (evt) {
 
   profileName.textContent = nameInput.value
   profileJob.textContent = jobInput.value
-  popupClose(popupProfile)
+  closePopup(popupProfile)
 }
 
 // Прикрепляем обработчик к форме:
@@ -90,12 +90,12 @@ formElement.addEventListener('submit', handleFormSubmit);
 
 buttonMestoAdd.addEventListener('click',function(){
 
-  popupOpen(popupMesto)  // Открываем попап
+  openPopup(popupMesto)  // Открываем попап
 })
 
 popupMestoClose.addEventListener('click', function() {
 
-  popupClose(popupMesto) // закрываем попап
+  closePopup(popupMesto) // закрываем попап
 })
 
 formElementMesto.addEventListener('submit', function(event){  // добавление корточек из формы
@@ -103,12 +103,12 @@ formElementMesto.addEventListener('submit', function(event){  // добавле�
 
   const titleImage = nameImageInput.value
   const srcImage = linkImageInput.value
-  const card = createdCard({name:titleImage,
+  const card = createCard({name:titleImage,
                             link:srcImage}) // создаем объект из значений импутов и передаем его в функцию
 
 
   cardElements.prepend(card) // добавляем карточку в начало
-  popupClose(popupMesto) // закрываем попап
+  closePopup(popupMesto) // закрываем попап
 
   nameImageInput.value = ''
   linkImageInput.value = ''
@@ -119,7 +119,7 @@ function renderCards() {  // функция добавл карточек на �
 
   const cards = initialCards.map(function(item) {  // все карточки сохранились в cards
 
-    return createdCard(item)
+    return createCard(item)
   })
 
   cardElements.prepend(...cards)  // в начало секции добавляем все созданные карточки
@@ -127,7 +127,7 @@ function renderCards() {  // функция добавл карточек на �
 
 renderCards()
 
-function createdCard(item) {  // создание карточек
+function createCard(item) {  // создание карточек
 
   const card = cardTemplate.cloneNode(true)  // копируем содержимое шаблона карточки (element)
   const elementCardImage = card.querySelector('.element__card-image')
@@ -146,21 +146,21 @@ function createdCard(item) {  // создание карточек
   })
 
   elementCardImage.addEventListener('click',function(){ // открытие попап картинки
-    const popupImageImg =  popupImage.querySelector('.popup-image__img')
-    popupOpen(popupImage)
+    const popupImageImg =  popupImage.querySelector('.popup_type_image__img')
+    openPopup(popupImage)
     popupImageImg.src = item.link
     popupImageImg.alt = item.name
-    popupImage.querySelector('.popup-image__title').textContent = item.name
+    popupImage.querySelector('.popup_type_image__title').textContent = item.name
 
 
   })
 
-  popupImage.querySelector('.popup__close').addEventListener('click', function(){ // закрываем попап картинки
-    popupClose(popupImage)
 
-  })
 
   return card // возвращает карточку
 }
 
+popupImage.querySelector('.popup__close').addEventListener('click', function(){ // закрываем попап картинки
+  closePopup(popupImage)
 
+})
