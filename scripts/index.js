@@ -20,7 +20,7 @@ const formElementMesto = popupMesto.querySelector('.popup__form')
 
 const buttonMestoAdd = document.querySelector('.profile__button')
 
-const popupImage = document.querySelector('.popup_type_image')
+const popupImage = document.querySelector('.popup__image')
 
 const initialCards = [
   {
@@ -146,11 +146,11 @@ function createCard(item) {  // создание карточек
   })
 
   elementCardImage.addEventListener('click',function(){ // открытие попап картинки
-    const popupImageImg =  popupImage.querySelector('.popup_type_image__img')
+    const popupImageImg =  popupImage.querySelector('.popup__image-view')
     openPopup(popupImage)
     popupImageImg.src = item.link
     popupImageImg.alt = item.name
-    popupImage.querySelector('.popup_type_image__title').textContent = item.name
+    popupImage.querySelector('.popup__image-title').textContent = item.name
 
 
   })
