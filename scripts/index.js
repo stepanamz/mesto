@@ -58,14 +58,14 @@ function openBigPopup(popup) {  // вкл - попапа с кнопкой
 
 function openPopup(popup) {  // вкл - попапа
   popup.classList.add('popup_opened')
-
+  document.addEventListener('keydown', closeByEscape);   // Добавили функцию закрытия по Escape
 }
 
 
 function closePopup(popup) {  // выкл - попапа
 
   popup.classList.remove('popup_opened');
-
+  document.removeEventListener('keydown', closeByEscape);  // Удалили функцию закрытия по Escape
 }
 
 buttonEditProfile.addEventListener('click',function(){
@@ -189,18 +189,13 @@ popupWindow.forEach((popupWindowElement) => {
     }
   })
 
-  window.addEventListener('keydown', function(event){
-    if (event.key === 'Escape' && popupWindowElement.classList.contains('popup_opened')) { // закрытие по ESCAPE
-      closePopup(popupWindowElement)
-    }
-  })
-
-
 });
 
 
-
-
-
-
+function closeByEscape(evt) {   // функция закрытия по Escape
+    if (evt.key === 'Escape') {
+      const openedPopup = document.querySelector('.popup_opened')
+      closePopup(openedPopup)
+    }
+  }
 
