@@ -49,20 +49,34 @@ const initialCards = [
   }
 ];
 
+function openBigPopup(popup) {  // вкл - попапа с кнопкой
+   const popupButton = popup.querySelector('.popup__form-button')
+   popupButton.setAttribute('disabled', true)
+   popupButton.classList.add('popup__form-button_inactive')
+   openPopup(popup)
+}
+
 function openPopup(popup) {  // вкл - попапа
   popup.classList.add('popup_opened')
+
 }
-function closePopup(popup) {  // вкл - попапа
-  popup.classList.remove('popup_opened')
+
+
+function closePopup(popup) {  // выкл - попапа
+
+  popup.classList.remove('popup_opened');
+
 }
 
 buttonEditProfile.addEventListener('click',function(){
 
-  openPopup(popupProfile)
+  openBigPopup(popupProfile)
 
   nameInput.value = profileName.textContent
   jobInput.value = profileJob.textContent
 })
+
+
 
 buttonClosePopupProfile.addEventListener('click',function(){
   closePopup(popupProfile)
@@ -90,7 +104,7 @@ formElement.addEventListener('submit', handleFormSubmit);
 
 buttonMestoAdd.addEventListener('click',function(){
 
-  openPopup(popupMesto)  // Открываем попап
+  openBigPopup(popupMesto)  // Открываем попап
 })
 
 popupMestoClose.addEventListener('click', function() {
@@ -110,8 +124,7 @@ formElementMesto.addEventListener('submit', function(event){  // добавле�
   cardElements.prepend(card) // добавляем карточку в начало
   closePopup(popupMesto) // закрываем попап
 
-  nameImageInput.value = ''
-  linkImageInput.value = ''
+  formElementMesto.reset();
 })
 
 
@@ -164,3 +177,30 @@ popupImage.querySelector('.popup__close').addEventListener('click', function(){ 
   closePopup(popupImage)
 
 })
+
+// закрытие попапа НЕ крестик
+
+const popupWindow = Array.from(document.querySelectorAll('.popup'))
+
+popupWindow.forEach((popupWindowElement) => {
+  popupWindowElement.addEventListener('click',function(event){  // закрытие по оверлею
+    if (event.target === event.currentTarget) {
+      closePopup(popupWindowElement)
+    }
+  })
+
+  window.addEventListener('keydown', function(event){
+    if (event.key === 'Escape' && popupWindowElement.classList.contains('popup_opened')) { // закрытие по ESCAPE
+      closePopup(popupWindowElement)
+    }
+  })
+
+
+});
+
+
+
+
+
+
+

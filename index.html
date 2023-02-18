@@ -44,13 +44,18 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <button class="popup__close" type="button"></button>
-        <form class="popup__form" name="formProfile">
-          <input required type="text" name="name" class="popup__form-name" value="" placeholder="Имя">
-          <input required type="text" name="subname" class="popup__form-name" value="" placeholder="Профессия">
-          <button type="submit" class="popup__form-button">Сохранить</button>
+
+        <form class="popup__form" name="formProfile" novalidate>
+          <input id='name-input' required type="text" name="name"    class="popup__form-name" value="" placeholder="Имя" minlength="2" maxlength="40">
+            <span class="name-input-error popup__form-error"></span>
+          <input id='subname-input' required type="text" name="subname" class="popup__form-name" value="" placeholder="Профессия" minlength="2" maxlength="40">
+            <span class="subname-input-error "></span>
+          <button  type="submit" class="popup__form-button">Сохранить</button>
         </form>
+
       </div>
     </div>
+      <!-- pop-up редактирования профиля -->
 
       <!-- pop-up добавления новой карточки -->
 
@@ -58,13 +63,19 @@
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
         <button class="popup__close" type="button"></button>
-        <form class="popup__form" name="formProfile">
-          <input required type="text" name="nameImage" class="popup__form-name" value="" placeholder="Название">
-          <input required type="text" name="linkImage" class="popup__form-name" value="" placeholder="Ссылка на картинку">
-          <button type="submit" class="popup__form-button">Создать</button>
+
+        <form class="popup__form" name="formProfile" novalidate>
+          <input id="image-input" required type="text" name="nameImage" class="popup__form-name" value="" placeholder="Название" minlength="2" maxlength="30">
+            <span class="image-input-error "></span>
+          <input id="url-input" required type="url" name="linkImage" class="popup__form-name" value="" placeholder="Ссылка на картинку">
+            <span class="url-input-error "></span>
+          <button  type="submit" class="popup__form-button">Создать</button>
         </form>
+
       </div>
     </div>
+
+       <!-- pop-up добавления новой карточки -->
 
       <!-- pop-up открытия изображение -->
 
@@ -75,7 +86,7 @@
         <h4 class="popup__image-title"></h4>
       </div>
     </div>
-
+          <!-- pop-up открытия изображение -->
           <!-- template отдельно -->
 
         <template class="template-card">
@@ -92,5 +103,6 @@
         </template>
 
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
   </body>
 </html>
