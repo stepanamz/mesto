@@ -1,3 +1,6 @@
+import Card from './Card.js';
+
+
 const buttonEditProfile = document.querySelector('.profile__info-edit-button')
 const popupProfile = document.querySelector('.popup_type_profile')
 const buttonClosePopupProfile = popupProfile.querySelector('.popup__close')
@@ -117,61 +120,17 @@ formElementMesto.addEventListener('submit', function(event){  // добавле�
 
   const titleImage = nameImageInput.value
   const srcImage = linkImageInput.value
-  const card = createCard({name:titleImage,
-                            link:srcImage}) // создаем объект из значений импутов и передаем его в функцию
+  const card = new Card({ name: titleImage,link: srcImage}, '.template-card');
 
+  const cardElement = card.generateCard();
+                  // Добавляем в DOM
+  document.querySelector('.elements').prepend(cardElement);
 
-  cardElements.prepend(card) // добавляем карточку в начало
   closePopup(popupMesto) // закрываем попап
-
   formElementMesto.reset();
 })
 
 
-function renderCards() {  // функция добавл карточек на страницу заполение секции карточек из массива
-
-  const cards = initialCards.map(function(item) {  // все карточки сохранились в cards
-
-    return createCard(item)
-  })
-
-  cardElements.prepend(...cards)  // в начало секции добавляем все созданные карточки
-}
-
-renderCards()
-
-function createCard(item) {  // создание карточек
-
-  const card = cardTemplate.cloneNode(true)  // копируем содержимое шаблона карточки (element)
-  const elementCardImage = card.querySelector('.element__card-image')
-  const elementCardLike = card.querySelector('.element__card-like')
-
-  elementCardImage.src = item.link  // ищем src и присваеваем ему объект с link
-  elementCardImage.alt = item.name  // ищем alt и присваеваем ему объект с name
-  card.querySelector('.element__card-title').textContent = item.name // ищем title карточки и присваеваем ему объект с name
-
-  elementCardLike.addEventListener('click',function(){
-    elementCardLike.classList.toggle('element__card-like_active') // лайки
-  })
-
-  card.querySelector('.element__trash').addEventListener('click',function(){ // удаление карточки
-    card.remove()
-  })
-
-  elementCardImage.addEventListener('click',function(){ // открытие попап картинки
-    const popupImageImg =  popupImage.querySelector('.popup__image')
-    openPopup(popupImage)
-    popupImageImg.src = item.link
-    popupImageImg.alt = item.name
-    popupImage.querySelector('.popup__image-title').textContent = item.name
-
-
-  })
-
-
-
-  return card // возвращает карточку
-}
 
 popupImage.querySelector('.popup__close').addEventListener('click', function(){ // закрываем попап картинки
   closePopup(popupImage)
@@ -187,6 +146,7 @@ popupWindow.forEach((popupWindowElement) => {
     if (event.target === event.currentTarget) {
       closePopup(popupWindowElement)
     }
+
   })
 
 });
@@ -198,4 +158,16 @@ function closeByEscape(evt) {   // функция закрытия по Escape
       closePopup(openedPopup)
     }
   }
+
+  initialCards.forEach((item) => {
+    // Создадим экземпляр карточки
+    const card = new Card(item, '.template-card');
+    // Создаём карточку и возвращаем наружу
+    const cardElement = card.generateCard();
+
+    // Добавляем в DOM
+    document.querySelector('.elements').append(cardElement);
+
+
+  });
 
