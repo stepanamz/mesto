@@ -82,13 +82,15 @@ export default class FormValidator {
   disableSubmitButton(){
     this._buttonElement.setAttribute('disabled', true);
     this._buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
+      }
+
+  removeValidationErrors(){
     this._inputList.forEach((_inputElement) => {
       const _errorElement = this._formElement.querySelector(`.${_inputElement.id}-error`);
       _inputElement.classList.remove(this._validationConfig.inputErrorClass);
       _errorElement.classList.remove(this._validationConfig.errorClass);
       _errorElement.textContent = "";
     });
-
   }
 }
 

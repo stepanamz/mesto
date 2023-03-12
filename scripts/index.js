@@ -24,6 +24,8 @@ const formElementMesto = popupMesto.querySelector(".popup__form");
 const buttonMestoAdd = document.querySelector(".profile__button");
 
 const popupImage = document.querySelector(".popup_type_image");
+const popupImageImg = document.querySelector('.popup__image');
+const popupImageTitle = document.querySelector('.popup__image-title');
 
 const initialCards = [
   {
@@ -66,7 +68,7 @@ const validationConfig = {
 function openPopup(popup) {
   // вкл - попапа
   popup.classList.add("popup_opened");
-  document.addEventListener("keydown", closeByEscape); // Добавили функцию закрытия по Escape
+  document.addEventListener("keydown", closeByEscape); // Добавили слушатель и функцию закрытия по Escape
 }
 
 function closePopup(popup) {
@@ -79,6 +81,7 @@ function closePopup(popup) {
 buttonEditProfile.addEventListener("click", function () {
   openPopup(popupProfile);
   validateProfile.disableSubmitButton();
+  validateProfile.removeValidationErrors();
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
@@ -102,8 +105,10 @@ formEditProfile.addEventListener("submit", submitEditProfilePopup);
 // popup MESTO
 
 buttonMestoAdd.addEventListener("click", function () {
+  formElementMesto.reset();
   openPopup(popupMesto); // Открываем попап
   validateMesto.disableSubmitButton();
+  validateMesto.removeValidationErrors();
 });
 
 popupMestoClose.addEventListener("click", function () {
@@ -156,11 +161,19 @@ initialCards.forEach((item) => {
 
 function createCard(item) {
     // Создадим экземпляр карточки
-    const card = new Card(item, ".template-card");
+    const card = new Card(item, ".template-card", openPopupImage);
     // Создаём карточку и возвращаем наружу
     const cardElement = card.generateCard();
     // Добавляем в DOM
     cardElements.prepend(cardElement);
+}
+
+// функция открытия картинки
+function openPopupImage(text, image){
+  popupImageImg.src = image;
+  popupImageImg.alt = text;
+  popupImageTitle.textContent = text;
+  openPopup(popupImage);
 }
 
 // валидация
