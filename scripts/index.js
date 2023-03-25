@@ -1,5 +1,10 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Section from "./Section.js";
+import Popup from "./Popup.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
 const buttonEditProfile = document.querySelector(".profile__info-edit-button");
 const popupProfile = document.querySelector(".popup_type_profile");
@@ -12,7 +17,9 @@ const jobInput = formEditProfile.querySelector('input[name="subname"]');
 const profileName = document.querySelector(".profile__info-name");
 const profileJob = document.querySelector(".profile__info-subname");
 
-const cardTemplate = document.querySelector(".template-card").content.querySelector(".element"); // Шаблон карточки
+const cardTemplate = document
+  .querySelector(".template-card")
+  .content.querySelector(".element"); // Шаблон карточки
 const cardElements = document.querySelector(".elements"); // секция куда будем вставлять карточки
 
 const popupMesto = document.querySelector(".popup_type_mesto");
@@ -24,8 +31,8 @@ const formElementMesto = popupMesto.querySelector(".popup__form");
 const buttonMestoAdd = document.querySelector(".profile__button");
 
 const popupImage = document.querySelector(".popup_type_image");
-const popupImageImg = document.querySelector('.popup__image');
-const popupImageTitle = document.querySelector('.popup__image-title');
+const popupImageImg = document.querySelector(".popup__image");
+const popupImageTitle = document.querySelector(".popup__image-title");
 
 const initialCards = [
   {
@@ -54,6 +61,11 @@ const initialCards = [
   },
 ];
 
+const cardData = {
+  name: nameImageInput.value,
+  link: linkImageInput.value,
+};
+
 const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__form-name",
@@ -63,23 +75,23 @@ const validationConfig = {
   errorClass: "popup__form-error",
 };
 
+// function openPopup(popup) {
+//   // вкл - попапа
+//   // popup.classList.add("popup_opened");
+//   // document.addEventListener("keydown", closeByEscape); // Добавили слушатель и функцию закрытия по Escape
+//   classPopup.open();
+// }
 
+// function closePopup(popup) {
+//   // выкл - попапа
+//   classPopup.setEventListeners();
+//   // popup.classList.remove("popup_opened");
+//   // document.removeEventListener("keydown", closeByEscape); // Удалили функцию закрытия по Escape
+// }
 
-function openPopup(popup) {
-  // вкл - попапа
-  popup.classList.add("popup_opened");
-  document.addEventListener("keydown", closeByEscape); // Добавили слушатель и функцию закрытия по Escape
-}
-
-function closePopup(popup) {
-  // выкл - попапа
-
-  popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", closeByEscape); // Удалили функцию закрытия по Escape
-}
-
+/*
 buttonEditProfile.addEventListener("click", function () {
-  openPopup(popupProfile);
+  profilePopup.open();
   validateProfile.disableSubmitButton();
   validateProfile.removeValidationErrors();
   nameInput.value = profileName.textContent;
@@ -87,15 +99,17 @@ buttonEditProfile.addEventListener("click", function () {
 });
 
 buttonClosePopupProfile.addEventListener("click", function () {
-  closePopup(popupProfile);
+  profilePopup.setEventListeners();
 });
 
-// Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
+// Обработчик «отправки» формы
 function submitEditProfilePopup(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  closePopup(popupProfile);
+  profilePopup.setEventListeners();
+  profilePopup.close();
 }
 
 // Прикрепляем обработчик к форме:
@@ -106,13 +120,13 @@ formEditProfile.addEventListener("submit", submitEditProfilePopup);
 
 buttonMestoAdd.addEventListener("click", function () {
   formElementMesto.reset();
-  openPopup(popupMesto); // Открываем попап
+  mestoPopup.open();
   validateMesto.disableSubmitButton();
   validateMesto.removeValidationErrors();
 });
 
 popupMestoClose.addEventListener("click", function () {
-  closePopup(popupMesto); // закрываем попап
+  mestoPopup.setEventListeners(); // закрываем попап
 });
 
 formElementMesto.addEventListener("submit", function (event) {
@@ -123,41 +137,41 @@ formElementMesto.addEventListener("submit", function (event) {
   const srcImage = linkImageInput.value;
   createCard({ name: titleImage, link: srcImage })
 
-  closePopup(popupMesto); // закрываем попап
+  mestoPopup.setEventListeners(); // закрываем попап
+  mestoPopup.close();
   formElementMesto.reset();
 });
 
-popupImage
-  .querySelector(".popup__close")
-  .addEventListener("click", function () {
+popupImage.querySelector(".popup__close").addEventListener("click", function () {
     // закрываем попап картинки
-    closePopup(popupImage);
+    imagePopup.setEventListeners();
   });
 
 // закрытие попапа НЕ крестик
 
-const popupsWindow = Array.from(document.querySelectorAll(".popup"));
+// const popupsWindow = Array.from(document.querySelectorAll(".popup"));
 
-popupsWindow.forEach((popupWindowElement) => {
-  popupWindowElement.addEventListener("click", function (event) {
-    // закрытие по оверлею
-    if (event.target === event.currentTarget) {
-      closePopup(popupWindowElement);
-    }
-  });
-});
+// popupsWindow.forEach((popupWindowElement) => {
+//   popupWindowElement.addEventListener("click", function (event) {
+//     // закрытие по оверлею
+//     if (event.target === event.currentTarget) {
+//       closePopup(popupWindowElement);
+//     }
+//   });
+// });
 
-function closeByEscape(evt) {
-  // функция закрытия по Escape
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  }
-}
+// function closeByEscape(evt) {
+//   // функция закрытия по Escape
+//   if (evt.key === "Escape") {
+//     const openedPopup = document.querySelector(".popup_opened");
+//     closePopup(openedPopup);
+//   }
+// }
 
-initialCards.forEach((item) => {
-    createCard(item)
-});
+// initialCards.forEach((item) => {
+//     createCard(item)
+// });
+
 
 function createCard(item) {
     // Создадим экземпляр карточки
@@ -168,12 +182,12 @@ function createCard(item) {
     cardElements.prepend(cardElement);
 }
 
+
+ */
 // функция открытия картинки
-function openPopupImage(text, image){
-  popupImageImg.src = image;
-  popupImageImg.alt = text;
-  popupImageTitle.textContent = text;
-  openPopup(popupImage);
+function openPopupImage() {
+  const popupWithImage = new PopupWithImage(".popup_type_image");
+  popupWithImage.open(image, text);
 }
 
 // валидация
@@ -183,4 +197,67 @@ validateProfile.enableValidation();
 const validateMesto = new FormValidator(validationConfig, formElementMesto);
 validateMesto.enableValidation();
 
+// Создаем экземпляр класса Section
 
+// Вынесли Renderer из создания класса, он понадобится еще и для отрисовки новых карточек
+const renderer = (item) => {
+  // Создадим экземпляр карточки
+  const card = new Card(item, ".template-card", {
+    handleImagePopup: (item) => {
+      const popupWithImage = new PopupWithImage(".popup_type_image");
+      popupWithImage.open(item.image, item.text);
+    },
+  });
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+  // Добавляем в DOM
+  cardElements.prepend(cardElement);
+};
+
+
+
+const section = new Section({ items: initialCards, renderer}, ".elements");
+section.renderItems();
+
+// function submitHandler(formData) {
+//   // обработка данных формы
+//   console.log(formData);
+// }
+
+
+const profilePopup = new PopupWithForm(".popup_type_profile", {submitHandler:(item) => userInfo.setUserInfo(item)}); // вместо этого new PopupWithForm. Здесь устанавливаем новые данные пользователя.
+//Потом навесить открытие этого класса на нужную кнопку, и в этой же функции прописать внесение данных профиля в инпуты
+
+const mestoPopup = new PopupWithForm(".popup_type_mesto", {submitHandler:(item) => renderer(item)}); // вместо этого new PopupWithForm. Здесь как раз используем renderer еще раз.
+// Потом навесить открытие этого класса на нужную кнопку
+mestoPopup.setEventListeners();
+
+buttonMestoAdd.addEventListener('click', function() {
+  mestoPopup.open();
+  validateMesto.removeValidationErrors();
+});
+
+
+
+// Создаем экземпляр класса UserInfo
+
+const userInfo = new UserInfo({
+  nameSelector: ".profile__info-name",
+  aboutSelector: ".profile__info-subname",
+});
+
+// Устанавливаем новые данные пользователя
+userInfo.setUserInfo({
+  name: nameImageInput.value,
+  about: linkImageInput.value,
+}); // Присваивать значения не нужно, эта функция должна брать значения из инпутов формы
+
+// Сброс ошибок форм тоже вписать в функции слушателей открытия форм
+
+buttonEditProfile.addEventListener('click', (event)=>{
+  const user = userInfo.getUserInfo()
+  nameInput.value = user.name
+  jobInput.value =  user.about
+  profilePopup.open();
+  validateProfile.removeValidationErrors();
+})

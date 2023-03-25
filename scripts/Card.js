@@ -4,7 +4,7 @@ const popupImageTitle = popupImage.querySelector(".popup__image-title");
 
 export default class Card {
 
-  constructor(data, templateSelector, handleImagePopup) {
+  constructor(data, templateSelector, {handleImagePopup}) {
     this._text = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
@@ -47,7 +47,7 @@ export default class Card {
         this._element.remove();
       });
     this._element.querySelector(".element__card-image").addEventListener("click", () => {
-      this._handleImagePopup(this._text, this._image);
+      this._handleImagePopup({text: this._text, image: this._image});
       });
   }
 

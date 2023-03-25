@@ -46,9 +46,9 @@
         <button class="popup__close" type="button"></button>
 
         <form class="popup__form" name="formProfile" novalidate>
-          <input id='name-input' required type="text" name="name"    class="popup__form-name" value="" placeholder="Имя" minlength="2" maxlength="40">
+          <input id='name-input' required type="text" name="name"    class="popup__form-name popup__input" value="" placeholder="Имя" minlength="2" maxlength="40">
             <span class="name-input-error popup__form-error"></span>
-          <input id='subname-input' required type="text" name="subname" class="popup__form-name" value="" placeholder="Профессия" minlength="2" maxlength="40">
+          <input id='subname-input' required type="text" name="subname" class="popup__form-name popup__input" value="" placeholder="Профессия" minlength="2" maxlength="40">
             <span class="subname-input-error "></span>
           <button  type="submit" class="popup__form-button">Сохранить</button>
         </form>
@@ -65,9 +65,9 @@
         <button class="popup__close" type="button"></button>
 
         <form class="popup__form" name="formProfile" novalidate>
-          <input id="image-input" required type="text" name="nameImage" class="popup__form-name" value="" placeholder="Название" minlength="2" maxlength="30">
+          <input id="image-input" required type="text" name="nameImage" class="popup__form-name popup__input" value="" placeholder="Название" minlength="2" maxlength="30">
             <span class="image-input-error "></span>
-          <input id="url-input" required type="url" name="linkImage" class="popup__form-name" value="" placeholder="Ссылка на картинку">
+          <input id="url-input" required type="url" name="linkImage" class="popup__form-name popup__input" value="" placeholder="Ссылка на картинку">
             <span class="url-input-error "></span>
           <button  type="submit" class="popup__form-button">Создать</button>
         </form>
@@ -103,6 +103,6 @@
         </template>
 
   <script src="./scripts/index.js" type="module"></script>
-  <script src="./scripts/FormValidator.js" type="module"></script>
+  <!-- <script src="./scripts/FormValidator.js" type="module"></script> -->
   </body>
 </html>
