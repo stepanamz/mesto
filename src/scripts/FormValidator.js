@@ -70,8 +70,7 @@ export default class FormValidator {
     // Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput(_inputList)) {
       // сделай кнопку неактивной
-      this._buttonElement.setAttribute("disabled", true);
-      this._buttonElement.classList.add(_Lists.inactiveButtonClass);
+      this.disableSubmitButton();
     } else {
       // иначе сделай кнопку активной
       this._buttonElement.classList.remove(_Lists.inactiveButtonClass);
@@ -85,12 +84,13 @@ export default class FormValidator {
       }
 
   removeValidationErrors(){
-    this._inputList.forEach((_inputElement) => {
-      const _errorElement = this._formElement.querySelector(`.${_inputElement.id}-error`);
-      _inputElement.classList.remove(this._validationConfig.inputErrorClass);
-      _errorElement.classList.remove(this._validationConfig.errorClass);
-      _errorElement.textContent = "";
-    });
+
+      this._toggleButtonState(); //<== управляем кнопкой ==
+
+      this._inputList.forEach((inputElement) => {
+        this._hideError(inputElement) //<==очищаем ошибки ==
+      });
+
   }
 }
 
