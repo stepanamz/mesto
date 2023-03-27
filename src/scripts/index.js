@@ -1,3 +1,5 @@
+import '../pages/index.css'; // добавьте импорт главного файла стилей
+
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
@@ -90,8 +92,6 @@ const validateMesto = new FormValidator(validationConfig, formElementMesto);
 validateMesto.enableValidation();
 
 // Создаем экземпляр класса Section
-
-
 const renderer = (item) => {
   // Создадим экземпляр карточки
   const card = new Card(item, ".template-card", {
@@ -106,41 +106,31 @@ const renderer = (item) => {
   cardElements.prepend(cardElement);
 };
 
-
-
 const section = new Section({ items: initialCards, renderer}, ".elements");
+
 section.renderItems();
-
-
 
 const profilePopup = new PopupWithForm(".popup_type_profile", {submitHandler:(item) => userInfo.setUserInfo(item)});
 
-
-const mestoPopup = new PopupWithForm(".popup_type_mesto", {submitHandler:(item) => renderer(item)});
-
-mestoPopup.setEventListeners();
+const mestoPopup = new PopupWithForm(".popup_type_mesto", {
+  submitHandler:(item) => {
+    renderer({
+      name: item.nameImage,
+      link: item.linkImage,
+    })
+  }
+});
 
 buttonMestoAdd.addEventListener('click', function() {
   mestoPopup.open();
   validateMesto.removeValidationErrors();
 });
 
-
-
 // Создаем экземпляр класса UserInfo
-
 const userInfo = new UserInfo({
   nameSelector: ".profile__info-name",
   aboutSelector: ".profile__info-subname",
 });
-
-// Устанавливаем новые данные пользователя
-userInfo.setUserInfo({
-  name: nameImageInput.value,
-  about: linkImageInput.value,
-});
-
-
 
 buttonEditProfile.addEventListener('click', (event)=>{
   const user = userInfo.getUserInfo()
