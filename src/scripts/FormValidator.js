@@ -51,8 +51,12 @@ export default class FormValidator {
   }
 
   enableValidation() {
-      // Для  формы вызовем функцию setEventListeners, передав ей элемент формы
-      this._setEventListeners(this._formElement, this._validationConfig);
+    // Для  формы вызовем функцию setEventListeners, передав ей элемент формы
+    this._setEventListeners(this._formElement, this._validationConfig);
+    this._formElement.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.disableSubmitButton();
+    });
   }
 
   // Функция принимает массив полей
@@ -83,14 +87,14 @@ export default class FormValidator {
     this._buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
       }
 
-  removeValidationErrors(){
+      removeValidationErrors() {
+        // управляем кнопкой
+        this._toggleButtonState(this._inputList, this._validationConfig);
 
-      this._toggleButtonState(); //<== управляем кнопкой ==
+        this._inputList.forEach((inputElement) => {
+          this._hideInputError(this._formElement, inputElement, this._validationConfig);
+        });
+      }
 
-      this._inputList.forEach((inputElement) => {
-        this._hideError(inputElement) //<==очищаем ошибки ==
-      });
-
-  }
 }
 

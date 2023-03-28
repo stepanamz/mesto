@@ -2,7 +2,7 @@
 
 import './index.css'; // добавьте импорт главного файла стилей
 
-import {buttonEditProfile, formEditProfile, nameInput, jobInput, formElementMesto, buttonMestoAdd, initialCards, validationConfig} from '../scripts/utils/constants.js';
+import {buttonEditProfile, formEditProfile, popupProfile, nameInput, jobInput, formElementMesto, buttonMestoAdd, initialCards, validationConfig} from '../scripts/utils/constants.js';
 
 import Card from "../scripts/Card.js";
 import FormValidator from "../scripts/FormValidator.js";
@@ -12,17 +12,27 @@ import PopupWithImage from "../scripts/PopupWithImage.js";
 import PopupWithForm from "../scripts/PopupWithForm.js";
 import UserInfo from "../scripts/UserInfo.js";
 
-// Создание экз Класса
-
+// валидация
 const validateProfile = new FormValidator(validationConfig, formEditProfile);
-const validateMesto = new FormValidator(validationConfig, formElementMesto);
-const popupWithImage = new PopupWithImage(".popup_type_image");
-const section = new Section({ items: initialCards, renderer}, ".elements");
+validateProfile.enableValidation();
 
+const validateMesto = new FormValidator(validationConfig, formElementMesto);
+validateMesto.enableValidation();
+
+const popupWithImage = new PopupWithImage(".popup_type_image");
+
+// Создаем экземпляр класса Section
 const renderer = (item) => {
-  const cardElement = createCard(item);      // Создаём карточку и возвращаем наружу -  Добавляем в DOM
+
+  // Создаём карточку и возвращаем наружу
+  const cardElement = createCard(item);
+  // Добавляем в DOM
   section.addItem(cardElement);
 };
+
+const section = new Section({ items: initialCards, renderer}, ".elements");
+
+section.renderItems();
 
 const profilePopup = new PopupWithForm(".popup_type_profile", {submitHandler:(item) => userInfo.setUserInfo(item)});
 
@@ -35,27 +45,17 @@ const mestoPopup = new PopupWithForm(".popup_type_mesto", {
   }
 });
 
-const userInfo = new UserInfo({
-  nameSelector: ".profile__info-name",
-  aboutSelector: ".profile__info-subname",
-});
-
-// валидация
-
-validateProfile.enableValidation();
-
-validateMesto.enableValidation();
-
-// Отображение всех элементов на странице
-
-section.renderItems();
-
-// Слушатели
-
 buttonMestoAdd.addEventListener('click', function() {
+
   mestoPopup.open();
   validateMesto.disableSubmitButton();
   validateMesto.removeValidationErrors();
+});
+
+// Создаем экземпляр класса UserInfo
+const userInfo = new UserInfo({
+  nameSelector: ".profile__info-name",
+  aboutSelector: ".profile__info-subname",
 });
 
 buttonEditProfile.addEventListener('click', (event)=>{
@@ -66,9 +66,8 @@ buttonEditProfile.addEventListener('click', (event)=>{
   validateProfile.removeValidationErrors();
 })
 
-// функция создания карточки
 
-function createCard(item) {
+function createCard(item) {  // функция создания карточки
 
   const card = new Card(item, ".template-card", {
     handleImagePopup: (item) => {
@@ -76,5 +75,5 @@ function createCard(item) {
     },
   });
 
-return card
+return card.generateCard();
 }
