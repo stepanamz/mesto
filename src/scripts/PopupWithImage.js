@@ -3,6 +3,7 @@ export default class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
     this._image = this._popup.querySelector('.popup__image');
+    this.setEventListeners();
     this._caption = this._popup.querySelector('.popup__image-title');
   }
 
@@ -12,12 +13,5 @@ export default class PopupWithImage extends Popup {
     this._caption.textContent = name;
     super.open();
 
-        // Найти кнопку закрытия попапа
-        const closeButton = this._popup.querySelector('.popup__close');
-
-        // Добавить обработчик события на клик по кнопке закрытия
-        closeButton.addEventListener('click', () => {
-          this.close();
-        });
   }
 }

@@ -2,14 +2,23 @@ export default class FormValidator {
   constructor(lists, formElement) {
     this._validationConfig = lists;
     this._formElement = formElement;
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._validationConfig.inputSelector));
-    this._buttonElement = this._formElement.querySelector(this._validationConfig.submitButtonSelector);
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(this._validationConfig.inputSelector)
+    );
+    this._buttonElement = this._formElement.querySelector(
+      this._validationConfig.submitButtonSelector
+    );
   }
 
   _isValid(_formElement, _inputElement, _Lists) {
     if (!_inputElement.validity.valid) {
       // showInputError  получает параметром форму, в которой находится проверяемое поле, и само это поле
-      this._showInputError(_formElement, _inputElement, _inputElement.validationMessage, _Lists);
+      this._showInputError(
+        _formElement,
+        _inputElement,
+        _inputElement.validationMessage,
+        _Lists
+      );
     } else {
       // hideInputError  получает параметром форму, в которой находится проверяемое поле, и само это поле
       this._hideInputError(_formElement, _inputElement, _Lists);
@@ -18,7 +27,9 @@ export default class FormValidator {
 
   _showInputError(_formElement, _inputElement, _errorMessage, _Lists) {
     // Находим элемент ошибки внутри самой функции
-    const _errorElement = _formElement.querySelector(`.${_inputElement.id}-error`);
+    const _errorElement = _formElement.querySelector(
+      `.${_inputElement.id}-error`
+    );
 
     _inputElement.classList.add(_Lists.inputErrorClass);
     _errorElement.textContent = _errorMessage;
@@ -27,7 +38,9 @@ export default class FormValidator {
 
   _hideInputError(_formElement, _inputElement, _Lists) {
     // Находим элемент ошибки
-    const _errorElement = _formElement.querySelector(`.${_inputElement.id}-error`);
+    const _errorElement = _formElement.querySelector(
+      `.${_inputElement.id}-error`
+    );
 
     _inputElement.classList.remove(_Lists.inputErrorClass);
     _errorElement.classList.remove(_Lists.errorClass);
@@ -35,7 +48,6 @@ export default class FormValidator {
   }
 
   _setEventListeners(_formElement, _Lists) {
-
     // Вызовем toggleButtonState, чтобы не ждать ввода данных в поля
     this._toggleButtonState(this._inputList, _Lists);
     // Обойдём все элементы полученной коллекции
@@ -53,7 +65,7 @@ export default class FormValidator {
   enableValidation() {
     // Для  формы вызовем функцию setEventListeners, передав ей элемент формы
     this._setEventListeners(this._formElement, this._validationConfig);
-    this._formElement.addEventListener('submit', (event) => {
+    this._formElement.addEventListener("submit", (event) => {
       event.preventDefault();
       this.disableSubmitButton();
     });
@@ -82,19 +94,23 @@ export default class FormValidator {
     }
   }
 
-  disableSubmitButton(){
-    this._buttonElement.setAttribute('disabled', true);
-    this._buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
-      }
+  disableSubmitButton() {
+    this._buttonElement.setAttribute("disabled", true);
+    this._buttonElement.classList.add(
+      this._validationConfig.inactiveButtonClass
+    );
+  }
 
-      removeValidationErrors() {
-        // управляем кнопкой
-        this._toggleButtonState(this._inputList, this._validationConfig);
+  removeValidationErrors() {
+    // управляем кнопкой
+    this._toggleButtonState(this._inputList, this._validationConfig);
 
-        this._inputList.forEach((inputElement) => {
-          this._hideInputError(this._formElement, inputElement, this._validationConfig);
-        });
-      }
-
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(
+        this._formElement,
+        inputElement,
+        this._validationConfig
+      );
+    });
+  }
 }
-

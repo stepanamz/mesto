@@ -2,7 +2,7 @@
 
 import './index.css'; // добавьте импорт главного файла стилей
 
-import {buttonEditProfile, formEditProfile, popupProfile, nameInput, jobInput, formElementMesto, buttonMestoAdd, initialCards, validationConfig} from '../scripts/utils/constants.js';
+import {buttonEditProfile, formEditProfile, popupProfile, nameInput, jobInput, formElementMesto, buttonMestoAdd, initialCards, validationConfig} from '../utils/constants.js';
 
 import Card from "../scripts/Card.js";
 import FormValidator from "../scripts/FormValidator.js";
