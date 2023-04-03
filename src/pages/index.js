@@ -11,6 +11,7 @@ import Popup from "../scripts/Popup.js";
 import PopupWithImage from "../scripts/PopupWithImage.js";
 import PopupWithForm from "../scripts/PopupWithForm.js";
 import UserInfo from "../scripts/UserInfo.js";
+import Api from "../scripts/Api.js"
 
 // валидация
 const validateProfile = new FormValidator(validationConfig, formEditProfile);
@@ -52,19 +53,35 @@ buttonMestoAdd.addEventListener('click', function() {
   validateMesto.removeValidationErrors();
 });
 
-// Создаем экземпляр класса UserInfo
-const userInfo = new UserInfo({
-  nameSelector: ".profile__info-name",
-  aboutSelector: ".profile__info-subname",
+
+// кнопка редактирования профиля
+buttonEditProfile.addEventListener('click', () => {
+  api.getUserInfo()
+    .then((userData) => {
+      nameInput.value = userData.name;
+      jobInput.value = userData.about;
+      profilePopup.open();
+      validateProfile.removeValidationErrors();
+    })
+    .catch((err) => {
+      console.log(`Ошибка при загрузке данных пользователя: ${err}`);
+    });
 });
 
-buttonEditProfile.addEventListener('click', (event)=>{
-  const user = userInfo.getUserInfo()
-  nameInput.value = user.name
-  jobInput.value =  user.about
-  profilePopup.open();
-  validateProfile.removeValidationErrors();
-})
+profilePopup.setEventListeners({
+  submitHandler: (data) => {
+    api.updateUserInfo(data)
+      .then((userData) => {
+        userInfo.setUserInfo(userData);
+        profilePopup.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка при обновлении данных пользователя: ${err}`);
+      });
+  }
+});
+
+
 
 
 function createCard(item) {  // функция создания карточки
@@ -77,3 +94,28 @@ function createCard(item) {  // функция создания карточки
 
 return card.generateCard();
 }
+
+
+// создаём экземпляр класса Api
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/cohort-63',
+  headers: {
+    authorization: '7fac089b-5548-4e87-af58-0cf3b47eea4b',
+    'Content-Type': 'application/json'
+  }
+});
+
+// Создаем экземпляр класса UserInfo
+const userInfo = new UserInfo({
+  nameSelector: ".profile__info-name",
+  aboutSelector: ".profile__info-subname",
+  avatarSelector: ".profile__avatar"
+});
+
+// Получаем информацию о пользователе с сервера и обновляем соответствующие элементы на странице
+api.getUserInfo()
+  .then(data => {
+    userInfo.setUserInfo(data);
+  })
+  .catch(err => console.log(`Ошибка: ${err}`));
