@@ -7,6 +7,7 @@ export default class Card {
     this._handleImagePopup = handleImagePopup;
     this._cardImage = null;
     this._cardLike = null;
+
   }
 
   _getTemplate() {
@@ -49,4 +50,7 @@ export default class Card {
   _handleLikeClick() {
     this._cardLike.classList.toggle("element__card-like_active");
   }
+
+
 }
+

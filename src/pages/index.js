@@ -11,6 +11,8 @@ import Popup from "../scripts/Popup.js";
 import PopupWithImage from "../scripts/PopupWithImage.js";
 import PopupWithForm from "../scripts/PopupWithForm.js";
 import UserInfo from "../scripts/UserInfo.js";
+import {apiConfig} from '../utils/apiConfig.js';
+import Api from '../scripts/Api';
 
 // валидация
 const validateProfile = new FormValidator(validationConfig, formEditProfile);
@@ -30,18 +32,18 @@ const renderer = (item) => {
   section.addItem(cardElement);
 };
 
-const section = new Section({ items: initialCards, renderer}, ".elements");
 
-section.renderItems();
 
 const profilePopup = new PopupWithForm(".popup_type_profile", {submitHandler:(item) => userInfo.setUserInfo(item)});
 
 const mestoPopup = new PopupWithForm(".popup_type_mesto", {
   submitHandler:(item) => {
-    renderer({
-      name: item.nameImage,
-      link: item.linkImage,
-    })
+    api.addNewCard({name: item.nameImage, link: item.linkImage})
+  .then((addedCard) => {
+        renderer(addedCard);
+        mestoPopup.close();
+      })
+  .catch(err => console.log(`Ошибка добавление карточки: ${err}`));
   }
 });
 
@@ -56,6 +58,7 @@ buttonMestoAdd.addEventListener('click', function() {
 const userInfo = new UserInfo({
   nameSelector: ".profile__info-name",
   aboutSelector: ".profile__info-subname",
+  imageSelector: ".profile__avatar"
 });
 
 buttonEditProfile.addEventListener('click', (event)=>{
@@ -77,3 +80,24 @@ function createCard(item) {  // функция создания карточки
 
 return card.generateCard();
 }
+
+// API
+
+const api = new Api(apiConfig);
+
+// const user = api.getUserInfo()
+//   user.then(data => {
+//     console.log(data)
+//   })
+
+  // Карточки на странце из api
+let section
+const apiCards = api.getInitialCards()
+  apiCards.then(card => {
+    section = new Section({ items: card, renderer}, ".elements", api);
+
+    section.renderItems();
+  })
+  .catch(err => {
+    alert(err)
+  })
