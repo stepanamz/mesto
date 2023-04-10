@@ -61,13 +61,20 @@ const userInfo = new UserInfo({
   imageSelector: ".profile__avatar"
 });
 
-buttonEditProfile.addEventListener('click', (event)=>{
-  const user = userInfo.getUserInfo()
-  nameInput.value = user.name
-  jobInput.value =  user.about
-  profilePopup.open();
-  validateProfile.removeValidationErrors();
-})
+profilePopup.setEventListeners({
+  submitHandler: (data) => {
+    api.updateUserInfo(data)
+      .then((userData) => {
+        userInfo.setUserInfo(userData);
+        profilePopup.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка при обновлении данных пользователя: ${err}`);
+      });
+  }
+});
+
+
 
 
 function createCard(item) {  // функция создания карточки
